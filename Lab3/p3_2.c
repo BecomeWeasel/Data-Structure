@@ -51,7 +51,7 @@ int main(int argc,char *argv[]){
         else{
           tmp=Find(key2,header);
           if(tmp==NULL){
-            printf("Insertion(%d) Failed : cannot find the location to be inserted",key1);
+            printf("Insertion(%d) Failed : cannot find the location to be inserted\n",key1);
           break;
           }
           else
@@ -65,7 +65,6 @@ int main(int argc,char *argv[]){
       case 'd':
         fscanf(input,"%d",&key1);
         Delete(key1,header);
-        printf("%d deleted in list\n",key1);
         break;
       case 'f':
         fscanf(input,"%d",&key1);
@@ -100,6 +99,11 @@ void Delete(ElementType X,List L){
     temp=P->next;
     P->next=temp->next;
     free(temp);
+  }
+  else
+  {
+    printf("Deletion failed : %d is not in the list\n",X);
+    return;
   }
 
 }
