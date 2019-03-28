@@ -41,14 +41,12 @@ void Push(Stack* S,int X){
     return;
   }
   if(IsFull(S)){
-   printf("FULL Stack\n");
+   printf("FULL Stack insertion failed %d\n",X);
    return;
   }
   else
   {
-    printf("%d current top\n",S->top);
     S->key[++S->top]=X;
-    printf("%d after insertion\n",S->top);
   }
   printf("%d inserted\n",X);
 }
@@ -59,7 +57,7 @@ int IsFull(Stack* S){
     return NULL;
   }
   else{
-   return S->max_stack_size<=S->top-1;
+   return S->max_stack_size-1==S->top;
   }
 }
 
@@ -81,8 +79,7 @@ int main(int argc,char *argv[]){
   //p4_1 main code
   //
   for(i=0;i<strlen(input_str)&&input_str[i]!='#';i++){
-    printf("%c\n",input_str[i]);
-    Push(stack,atoi(input_str[i]));
+    Push(stack,input_str[i]-'0');
 
   }
   fclose(fi);
