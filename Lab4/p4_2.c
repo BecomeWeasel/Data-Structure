@@ -95,14 +95,7 @@ int IsEmpty(Stack *S)
 	}
 	else
 	{
-		if (S->top > -1)
-		{
-			return 0;
-		}
-		else
-		{
-			return 1;
-		}
+		return S->top > -1 ? 0 : 1;
 
 	}
 }
@@ -116,7 +109,7 @@ int Pop(Stack *S)
 	}
 	if (IsEmpty(S))
 	{
-		printf("Empty stack\n");
+		printf("\nEmpty stack\n");
 		return -1;
 	}
 	else
@@ -256,8 +249,8 @@ int main(int argc, char *argv[])
 		result = PostFix(stack, input_str[i]);
 		if (result == -1)
 		{
-			printf("something wrong with input or invalid stack structure\n");
-			printf("please try with valid postfix evaluation input files\n");
+//			printf("something wrong with input or invalid stack structure\n");
+//			printf("please try with valid postfix evaluation input files\n");
 			continue;
 		}
 	}
