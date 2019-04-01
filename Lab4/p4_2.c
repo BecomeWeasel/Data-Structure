@@ -58,7 +58,7 @@ void Push(Stack *S, int X)
 	}
 	if (IsFull(S))
 	{
-		printf("Full stack insertion failed %d\n", X);
+		printf("\nFull stack insertion failed %d\n", X);
 		return;
 	}
 	else
@@ -145,17 +145,9 @@ int PostFix(Stack *S, char input_str)
 				return -1;
 			}
 			result = a + b;
-			if (IsFull(S))
-			{
-				printf("stack is full\n");
-				return -1;
-			}
-			else
-			{
-				Push(S, result);
-				printf("%d ", Top(S));
-				return result;
-			}
+			Push(S, result);
+			printf("%d ", Top(S));
+			return result;
 			break;
 		case '-':
 			b = Pop(S);
@@ -166,18 +158,9 @@ int PostFix(Stack *S, char input_str)
 				return -1;
 			}
 			result = a - b;
-			if (IsFull(S))
-			{
-				printf("stack is full\n");
-				return -1;
-			}
-			else
-			{
-				Push(S, result);
-				printf("%d ", Top(S));
-				return result;
-			}
-			break;
+			Push(S, result);
+			printf("%d ", Top(S));
+			return result;
 		case '*':
 			b = Pop(S);
 			a = Pop(S);
@@ -187,17 +170,11 @@ int PostFix(Stack *S, char input_str)
 				return -1;
 			}
 			result = a * b;
-			if (IsFull(S))
-			{
-				printf("Stack is Full\n");
-				return -1;
-			}
-			else
-			{
-				Push(S, result);
-				printf("%d ", Top(S));
-				return result;
-			}
+
+			Push(S, result);
+			printf("%d ", Top(S));
+			return result;
+
 			break;
 		case '/':
 			b = Pop(S);
@@ -208,17 +185,11 @@ int PostFix(Stack *S, char input_str)
 				return -1;
 			}
 			result = a / b;
-			if (IsFull(S))
-			{
-				printf("stack is full\n");
-				return -1;
-			}
-			else
-			{
-				Push(S, result);
-				printf("%d ", Top(S));
-				return result;
-			}
+
+			Push(S, result);
+			printf("%d ", Top(S));
+			return result;
+
 			break;
 		case '%':
 			b = Pop(S);
@@ -229,29 +200,16 @@ int PostFix(Stack *S, char input_str)
 				return -1;
 			}
 			result = a % b;
-			if (IsFull(S))
-			{
-				printf("stack is full\n");
-				return -1;
-			}
-			else
-			{
-				Push(S, result);
-				printf("%d ", Top(S));
-				return result;
-			}
+
+			Push(S, result);
+			printf("%d ", Top(S));
+			return result;
+
 			break;
 		default:
-			if (IsFull(S))
-			{
-				printf("stack is full\n");
-				return -1;
-			}
-			else
-			{
-				Push(S, input_str - '0');
-				printf("%d ", Top(S));
-			}
+
+			Push(S, input_str - '0');
+			printf("%d ", Top(S));
 
 			break;
 	}
@@ -300,7 +258,7 @@ int main(int argc, char *argv[])
 		{
 			printf("something wrong with input or invalid stack structure\n");
 			printf("please try with valid postfix evaluation input files\n");
-			return 0;
+			continue;
 		}
 	}
 	printf("\nevaluation result : %d\n", result);
