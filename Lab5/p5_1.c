@@ -72,7 +72,7 @@ void printTree(Tree tree)
 
 void PrintPreOrder(Tree tree, int index)
 {
-	if (tree->element[index] != '\0')
+	if (tree->element[index]&&index<tree->Size)
 	{
 		printf("%d ", tree->element[index]);
 		PrintPreOrder(tree, GetLeftChildIndex(index));
