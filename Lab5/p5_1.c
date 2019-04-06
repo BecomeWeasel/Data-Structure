@@ -9,6 +9,8 @@ struct CompleteTree
 		int *element;
 };
 
+#define TREE_START_INDEX 1
+
 Tree CreateTree(int);
 
 void Insert(Tree, int);
@@ -67,12 +69,12 @@ void Insert(Tree tree, int Value)
 
 void printTree(Tree tree)
 {
-	PrintPreOrder(tree, 0);
+	PrintPreOrder(tree, TREE_START_INDEX);
 }
 
 void PrintPreOrder(Tree tree, int index)
 {
-	if (tree->element[index]&&index<tree->Size)
+	if (tree->element[index]&&index<=tree->Size)
 	{
 		printf("%d ", tree->element[index]);
 		PrintPreOrder(tree, GetLeftChildIndex(index));
