@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 Tree CreateTree(int treeSize)
 {
 	Tree tree = (Tree) malloc(sizeof(struct CompleteTree));
-	tree->element = (int *) malloc(sizeof(int) * treeSize);
+	tree->element = (int *) malloc(sizeof(int) * (treeSize+1));
 	tree->Size = treeSize;
 	tree->nodeNum = 0;
 	return tree;
@@ -62,7 +62,7 @@ void Insert(Tree tree, int Value)
 		printf("Stack is Full\n");
 		return;
 	}
-	tree->element[tree->nodeNum++] = Value;
+	tree->element[++tree->nodeNum] = Value;
 }
 
 void printTree(Tree tree)
@@ -82,12 +82,12 @@ void PrintPreOrder(Tree tree, int index)
 
 int GetLeftChildIndex(int parentIndex)
 {
-	return parentIndex * 2 + 1;
+	return parentIndex * 2;
 }
 
 int GetRightChildIndex(int parentIndex)
 {
-	return (parentIndex + 1) * 2;
+	return parentIndex*2+1;
 }
 
 int GetParentIndex(int originIndex)
