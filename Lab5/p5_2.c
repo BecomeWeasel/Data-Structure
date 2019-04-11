@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct CompleteTree *Tree;
 struct CompleteTree
 {
 		int Size;
 		int nodeNum;
 		int *element;
 };
+typedef struct CompleteTree *Tree;
 
 #define TREE_START_INDEX 1
 
@@ -17,7 +17,7 @@ void Insert(Tree, int);
 
 void printTree(Tree);
 
-void FreeTree(Tree);
+void freeTree(Tree);
 
 int GetLeftChildIndex(int);
 
@@ -25,11 +25,11 @@ int GetRightChildIndex(int);
 
 int GetParentIndex(int);
 
-void printPreOrder(Tree, int);
+void printPreorder(Tree, int);
 
-void printInOrder(Tree, int);
+void printInorder(Tree, int);
 
-void printPostOrder(Tree, int);
+void printPostorder(Tree, int);
 
 int main(int argc, char *argv[])
 {
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		Insert(tree, tempNum);
 	}
 	printTree(tree);
-	FreeTree(tree);
+	freeTree(tree);
 }
 
 Tree CreateTree(int treeSize)
@@ -63,7 +63,7 @@ void Insert(Tree tree, int Value)
 {
 	if (tree->nodeNum == tree->Size)
 	{
-		printf("Stack is Full\n");
+		printf("Error!Tree is Full\n");
 		return;
 	}
 	tree->element[++tree->nodeNum] = Value;
@@ -72,63 +72,46 @@ void Insert(Tree tree, int Value)
 void printTree(Tree tree)
 {
 	printf("\nPreOrder: ");
-	printPreOrder(tree, TREE_START_INDEX);
+	printPreorder(tree, TREE_START_INDEX);
 	printf("\nInOrder: ");
-	printInOrder(tree,TREE_START_INDEX);
+	printInorder(tree, TREE_START_INDEX);
 	printf("\nPostOrder: ");
-	printPostOrder(tree, TREE_START_INDEX);
+	printPostorder(tree, TREE_START_INDEX);
 
 }
 
-void printPreOrder(Tree tree, int index)
+void printPreorder(Tree tree, int index)
 {
-	if (tree->element[index] && index <= tree->Size)
+	if (tree->element[index] && index <= tree->nodeNum)
 	{
 		printf("%d ", tree->element[index]);
-		printPreOrder(tree, GetLeftChildIndex(index));
-		printPreOrder(tree, GetRightChildIndex(index));
+		printPreorder(tree, 2 * index);
+		printPreorder(tree, 2 * index + 1);
 	}
 }
 
-void printInOrder(Tree tree, int index)
+void printInorder(Tree tree, int index)
 {
-	if (tree->element[index] && index <= tree->Size)
+	if (tree->element[index] && index <= tree->nodeNum)
 	{
-		printInOrder(tree, GetLeftChildIndex(index));
+		printInorder(tree, 2 * index);
 		printf("%d ", tree->element[index]);
-		printInOrder(tree, GetRightChildIndex(index));
+		printInorder(tree, 2 * index + 1);
 	}
 }
 
-void printPostOrder(Tree tree, int index)
+void printPostorder(Tree tree, int index)
 {
-	if (tree->element[index] && index <= tree->Size)
+	if (tree->element[index] && index <= tree->nodeNum)
 	{
-		printPostOrder(tree, GetLeftChildIndex(index));
-		printPostOrder(tree, GetRightChildIndex(index));
+		printPostorder(tree, 2 * index);
+		printPostorder(tree, 2 * index + 1);
 		printf("%d ", tree->element[index]);
 	}
 
 }
 
-int GetLeftChildIndex(int parentIndex)
-{
-	return parentIndex * 2;
-}
-
-int GetRightChildIndex(int parentIndex)
-{
-	return parentIndex * 2 + 1;
-}
-
-int GetParentIndex(int originIndex)
-{
-	if (originIndex % 2 == 1)
-	{ return (originIndex - 1) / 2; }
-	else return originIndex / 2 - 1;
-}
-
-void FreeTree(Tree tree)
+void freeTree(Tree tree)
 {
 	free(tree->element);
 	free(tree);
