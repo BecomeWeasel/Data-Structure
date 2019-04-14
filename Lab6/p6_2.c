@@ -30,9 +30,9 @@ int main(int argc, char *argv[])
 	Tree root = NULL;
 	char cv;
 	int key;
+	fscanf(fi,"%c",&cv);
 	while (!feof(fi))
 	{
-		fscanf(fi, "%c", &cv);
 		switch (cv)
 		{
 			case 'i':
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 				break;
 			case 'd':
 				fscanf(fi, "%d", &key);
-				root=deleteNode(root, key, INITIAL);
+				root = deleteNode(root, key, INITIAL);
 				break;
 			case 'f':
 				fscanf(fi, "%d", &key);
@@ -50,10 +50,13 @@ int main(int argc, char *argv[])
 			case 'p':
 				fscanf(fi, "%c", &cv);
 				if (cv == 'i')
+				{
 					printInorder(root);
+				}
 				printf("\n");
 				break;
 		}
+		fscanf(fi, "%c", &cv);
 	}
 	deleteTree(root);
 	return 0;
@@ -150,11 +153,11 @@ Tree deleteNode(Tree root, int key, int isInitial)
 
 	else if (key < root->value)
 	{
-		root->left = deleteNode(root->left, key, isInitial==INITIAL?INITIAL:RECURSION);
+		root->left = deleteNode(root->left, key, isInitial == INITIAL ? INITIAL : RECURSION);
 	}
 	else if (key > root->value)
 	{
-		root->right = deleteNode(root->right, key, isInitial==INITIAL?INITIAL:RECURSION);
+		root->right = deleteNode(root->right, key, isInitial == INITIAL ? INITIAL : RECURSION);
 	}
 	else if (root->right && root->left)
 	{

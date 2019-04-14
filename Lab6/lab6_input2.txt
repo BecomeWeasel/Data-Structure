@@ -3,12 +3,14 @@ i 25
 i 3
 i 5
 i 15
-pi
 f 30
 f 5
 f 10
+pi
 d 10
+pi
 f 10
+d 15
 pi
 d 20
 pi
