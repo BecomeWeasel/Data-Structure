@@ -1,6 +1,20 @@
-i 7
-i 1
-i 9
 i 10
-i 1
+i 25
+i 3
+i 5
+i 15
+i 7
+pi
+d 10
+pi
+d 2
+d 7
+pi
+d 5
+pi
+d 3
+pi
+d 25
+pi
+d 15
 pi
