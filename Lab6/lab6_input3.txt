@@ -1,7 +1,7 @@
-i 10
+i 82
+pi
+d 82
+pi
 i 3
-i 25
-i 7
 pi
-d 3
-pi
+i 3
