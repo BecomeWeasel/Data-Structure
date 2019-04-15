@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct BinarySearchTree *Tree;
 struct BinarySearchTree
@@ -12,17 +12,17 @@ struct BinarySearchTree
 #define INITIAL 1
 #define RECURSION 0
 
-Tree insertNode(Tree root, int key);
+Tree insertNode(Tree, int);
 
-Tree deleteNode(Tree root, int key, int isInitial);
+Tree deleteNode(Tree, int, int);
 
-void findNode(Tree root, int key);
+void findNode(Tree, int);
 
-void printInorder(Tree root);
+void printInorder(Tree);
 
-void deleteTree(Tree root);
+void deleteTree(Tree);
 
-Tree getMaxValueInTree(Tree parentNode, Tree node);
+Tree getMaxValueInTree(Tree, Tree);
 
 int main(int argc, char *argv[])
 {
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	Tree root = NULL;
 	char cv;
 	int key;
-	fscanf(fi,"%c",&cv);
+	fscanf(fi, "%c", &cv);
 	while (!feof(fi))
 	{
 		switch (cv)
@@ -87,9 +87,9 @@ Tree insertNode(Tree root, int key)
 	{
 		root->right = insertNode(root->right, key);
 	}
-	else // key == root->value
+	else // key already exist
 	{
-		printf("Insertion Error : There is already %d in the tree\n", key);
+		printf("Insertion Error : There is already %d in the tree.\n", key);
 	}
 	return root;
 }
