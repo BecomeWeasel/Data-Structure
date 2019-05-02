@@ -38,6 +38,7 @@ int main(int argc,char**argv){
     printf("\n");
   }
 	DeleteTree(myTree);
+	return 0;
 }
 
 AVLTree Insert(ElementType X,AVLTree T){
