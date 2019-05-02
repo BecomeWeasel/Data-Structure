@@ -18,6 +18,8 @@ Position SingleRotateWithLeft(Position);
 Position SingleRotateWithRight(Position);
 int Height(AVLTree);
 int Max(int,int);
+void DeleteTree(AVLTree);
+
 
 int main(int argc,char**argv){
   FILE *fp=fopen(argv[1],"r");
@@ -35,6 +37,7 @@ int main(int argc,char**argv){
     printInorder(myTree);
     printf("\n");
   }
+	DeleteTree(myTree);
 }
 
 AVLTree Insert(ElementType X,AVLTree T){
@@ -72,7 +75,7 @@ void printInorder(AVLTree tree){
   if(tree==NULL)
     return;
   printInorder(tree->Left);
-  printf("%d(%d)",tree->Element,tree->Height);
+  printf("%d (%d) ",tree->Element,tree->Height);
   printInorder(tree->Right);
 }
 
@@ -105,20 +108,37 @@ Position SingleRotateWithRight(Position K2){
 }
 
 int Height(AVLTree T){
-  int leftHeight;
-  int rightHeight;
-
-  if(T->Left==NULL)
-    leftHeight=0;
-  else leftHeight=T->Left->Height;
-
-  if(T->Right==NULL)
-    rightHeight=0;
-  else rightHeight=T->Right->Height;
-
-  return leftHeight>rightHeight?leftHeight:rightHeight;
+//  int leftHeight;
+//  int rightHeight;
+//
+//	if(T==NULL) return -1;
+//
+//  if(T->Left==NULL)
+//    leftHeight=0;
+//  else leftHeight=T->Left->Height;
+//
+//  if(T->Right==NULL)
+//    rightHeight=0;
+//  else rightHeight=T->Right->Height;
+//
+//  return leftHeight>rightHeight?leftHeight:rightHeight;
+	if(T==NULL){
+		return -1;
+	}
+	else{
+		T->Height=Max(Height(T->Left),Height(T->Right))+1;
+		return T->Height;
+	}
 }
 
 int Max(int a,int b){
   return a>b?a:b;
+}
+
+void DeleteTree(AVLTree T){
+	if(T!=NULL){
+		DeleteTree(T->Left);
+		DeleteTree(T->Right);
+		free(T);
+	}
 }
