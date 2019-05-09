@@ -31,98 +31,36 @@ void PrintGraph(Graph G);
 
 int main(int argc, char **argv)
 {
-	FILE *fp = fopen(argv[1], "r");
-	int size = 0;
-	int num;
-	char bufferforcount[128];
-	char buffer2[128];
-	char bufferforedgs[128];
-	Graph myGraph;
-	//for loop to count node number
-	// size=somevalue;
-
-	int phase = 0;
-	fgets(bufferforcount, 128, fp);
-	strtok(bufferforcount, "\n");
-
-	strcpy(buffer2, bufferforcount);
-
-	char *tempstr;
-
-	tempstr = strtok(bufferforcount, " ");
-	size++;
-
-	while (1)
+	int i = 0;
+	int *int_node;
+	char input_node[100];
+	char *token;
+	Graph G;
+	FILE *fi = fopen(argv[1], "r");
+	fgets(input_node, 100, fi);
+	int_node = (int *) malloc(sizeof(int) * strlen(input_node));
+	strtok(input_node,"\n");
+	token = strtok(input_node, " ");
+	while (token != NULL)
 	{
-		tempstr = strtok(NULL, " ");
-		if (tempstr == NULL) break;
-		size++;
+		int_node[i++] = atoi(token);
+		token = strtok(NULL, " ");
 	}
-
-
-	tempstr = NULL;
-
-	int *setOfNodes = (int *) malloc(sizeof(int) * size);
-
-
-	char *tempstr2 = strtok(buffer2, " ");
-	setOfNodes[0] = atoi(tempstr2);
-
-	for (int j = 1; j < size; j++)
+	G = CreateGraph(int_node, i);
+	while (!feof(fi))
 	{
-		tempstr2 = strtok(NULL, " ");
-		setOfNodes[j] = atoi(tempstr2);
+		fscanf(fi, "%s", input_node);
+		token = strtok(input_node, "-");
+		if (token == NULL) break;
+		int a = atoi(token);
+		token = strtok(NULL, " ");
+		if (token == NULL) break;
+		int b = atoi(token);
+		InsertEdge(G, a, b);
 	}
-
-	myGraph = CreateGraph(setOfNodes, size);
-	free(setOfNodes);
-
-
-	int src;
-	int dest;
-	while (fscanf(fp, "%d", &src) != EOF)
-	{
-		fscanf(fp, "-");
-		fscanf(fp, "%d ", &dest);
-		InsertEdge(myGraph,src,dest);
-	}
-
-
-	// 입력이 두줄만 온다고 가정?
-
-
-//			while (1)
-//			{
-//
-//				int src;
-//
-//
-//				edgestr = strtok(edgestr == NULL ? bufferforcount : NULL," ");
-//				if(edgestr==NULL) break;
-//
-//				char Edgestore[128]="";
-//
-//				strcpy(Edgestore,edgestr);
-//
-//				char EdgeStrFirst[128]="";
-//				char EdgeStrSecond[128]="";
-//				char * tempstr=strtok(Edgestore,"-");
-//				strcpy(EdgeStrFirst,tempstr);
-//				tempstr=strtok(NULL,"-");
-//				strcpy(EdgeStrSecond,tempstr);
-//
-//
-//				InsertEdge(myGraph,atoi(EdgeStrFirst),atoi(EdgeStrSecond));
-//				printf("%s\n",edgestr);
-//			}
-
-
-
-// print matrix
-	PrintGraph(myGraph);
-
-//
-	DeleteGraph(myGraph);
+	PrintGraph(G);
+	DeleteGraph(G);
+	return 0;
 }
 
 Graph CreateGraph(int *input_nodes, int numberOfNode)
