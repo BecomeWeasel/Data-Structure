@@ -76,10 +76,7 @@ int main(int argc, char **argv)
 		int b = atoi(token);
 		InsertEdge(G, a, b);
 	}
-	PrintGraph(G);
 	Topsort(G);
-	printf("\n");
-//	PrintGraph(G);
 	DeleteGraph(G);
 	return 0;
 }
