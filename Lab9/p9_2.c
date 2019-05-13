@@ -47,6 +47,10 @@ void DeleteQueue(Queue Q);
 
 void MakeEmpty(Queue Q);
 
+void bubbleSort(int arr[], int n,Graph G);
+
+void swap(int * a,int* b);
+
 int main(int argc, char **argv)
 {
 	int i = 0;
@@ -171,20 +175,35 @@ void Topsort(Graph G){
 	int V;
 	int* InDegree=(int *)malloc(sizeof(int)*G->size);
 	checkIndegree(InDegree,G);
+	int index2=0;
+	int batched_array_init[G->size];
 	for(int i=0;i<G->size;i++){
-		if(InDegree[i]==0)
-			Enqueue(Q, i); // index 삽입
+		if(InDegree[i]==0){
+//			Enqueue(Q, i); // index 삽입
+		batched_array_init[index2++]=i;
+		}
 	}
+	bubbleSort(batched_array_init,index2,G);
+	for(int i=0;i<index2;i++){
+		Enqueue(Q, batched_array_init[i]);
+	}
+
 	while(!IsEmpty(Q)){
 		V=Dequeue(Q,G);
+		int index=0;
+		int batched_array[G->size];
 		for(int i=0;i<G->size;i++){
 			if(G->matrix[V][i]==1){
 				G->matrix[V][i]=0;
 				InDegree[i]--;
-				if(InDegree[i]==0) Enqueue(Q,i);
+//				if(InDegree[i]==0) Enqueue(Q,i);
+				if(InDegree[i]==0) batched_array[index++]=i;
 			}
 		}
-
+		bubbleSort(batched_array,index,G);
+		for(int i=0;i<index;i++){
+			Enqueue(Q, batched_array[i]);
+		}
 	}
 	DeleteQueue(Q);
 }
@@ -226,3 +245,21 @@ void DeleteQueue(Queue Q){
 void MakeEmpty(Queue Q){
 
 }
+
+void bubbleSort(int arr[], int n,Graph G)
+{
+	int i, j;
+	for (i = 0; i < n-1; i++)
+
+		// Last i elements are already in place
+		for (j = 0; j < n-i-1; j++)
+			if (G->node[arr[j]] > G->node[arr[j+1]])
+				swap(&arr[j], &arr[j+1]);
+}
+
+void swap(int *a ,int*b){
+	int temp=*a;
+	*a=*b;
+	*b=temp;
+}
+
