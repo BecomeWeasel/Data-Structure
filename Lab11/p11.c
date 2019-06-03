@@ -78,10 +78,12 @@ void createMaze(DisjointSets *sets, DisjointSets *maze_print, int num){
 	int set_size = sets->size_maze;
 	srand((unsigned int)time(NULL));
 	while(set_size > 1){
-		// If last and first Cell joint, -> 이미 같은 셋
+		// 첫번째와 마지막이 만난다면 출구가잇다는뜻 이므로 종료
 		first = find(sets, 0);
-		last = find(sets, sets->size_maze);
-		if(first == last && first != 0 && last != 0) break;
+		last = find(sets, sets->size_maze - 1);
+		if(first == last && first != 0 && last != 0){
+			break;
+		}
 
 		randCell = (rand() % sets->size_maze);
 		randWall = randCell*2 + (rand() % 2);
