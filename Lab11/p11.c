@@ -71,22 +71,25 @@ int find(DisjointSets *sets, int i){
 }
 
 void createMaze(DisjointSets *sets, DisjointSets *maze_print, int num){
-	int randCell, randWall;
+	int randNode, randWall;
 	int set1, set2;
-	int root1, root2;
-	int first, last;
+	int target1, target2;
+	int firstNode, lastNode;
 	int set_size = sets->size_maze;
-	srand((unsigned int)time(NULL));
+
+	srand((unsigned int)time(NULL)); // 이 라인 없으면 선택된것만 선택될확률 높음
+
 	while(set_size > 1){
 		// 첫번째와 마지막이 만난다면 출구가잇다는뜻 이므로 종료
-		first = find(sets, 0);
-		last = find(sets, sets->size_maze - 1);
-		if(first == last && first != 0 && last != 0){
+		firstNode = find(sets, 0);
+		lastNode = find(sets, sets->size_maze - 1);
+		if(firstNode == lastNode
+		   && firstNode != 0 && lastNode != 0){
 			break;
 		}
 
-		randCell = (rand() % sets->size_maze);
-		randWall = randCell*2 + (rand() % 2);
+		randNode = (rand() % sets->size_maze);
+		randWall = randNode*2 + (rand() % 2);
 
 
 		// 가로 세로 벽을 쌓는 형식
@@ -102,33 +105,35 @@ void createMaze(DisjointSets *sets, DisjointSets *maze_print, int num){
 		if(maze_print->ptr_arr[randWall] == 0)
 			continue;
 
-		set1 = randCell;
+		set1 = randNode;
 
-		// select a cell over Horizontal wall
-		if(randWall % 2 == 0) set2 = randCell + num;
 
-			// select a cell over Vertical wall
-		else set2 = randCell + 1;
+		if(randWall % 2 == 0) {
+			set2 = randNode + num;
+		} else {
+			set2 = randNode + 1;
+		}
 
-		root1 = find(sets, set1);
-		root2 = find(sets, set2);
+		target1 = find(sets, set1);
+		target2 = find(sets, set2);
 
-		// joint set
-		if(root1 == root2 && root1 != 0 && root2 != 0)
+		// 이미 같은 셋에 속해있다면 다른 셀을 선택해야함
+		if(target1 == target2
+		   && target1 != 0
+		   && target2 != 0)
 			continue;
 
-		// union sets
-		Union(sets, root1, root2);
+		// 다른 셋에 속해잇으므로
+		Union(sets, target1, target2);
+
 		set_size--;
-
-
 		maze_print->ptr_arr[randWall] = 0;
 	}
 }
 
 void printMaze(DisjointSets *sets, int num){
 	sets->ptr_arr[sets->size_maze - 1] = 0; // 출구만들기
-	// Top line
+	// 맨위벽
 	for(int i = 0; i < num; i++)
 		printf(" _");
 	printf("\n");
