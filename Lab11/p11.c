@@ -65,7 +65,7 @@ void Union(DisjointSets *sets, int i, int j){
 }
 
 int find(DisjointSets *sets, int i){
-	if(sets->ptr_arr[i] <= 0)
+	if(sets->ptr_arr[i] <= 0) // 본인이 루트라면
 		return i;
 	return find(sets, sets->ptr_arr[i]); // 재귀적으로 호출
 }
@@ -75,10 +75,10 @@ void createMaze(DisjointSets *sets, DisjointSets *maze_print, int num){
 	int set1, set2;
 	int root1, root2;
 	int first, last;
-	int set = sets->size_maze;
+	int set_size = sets->size_maze;
 	srand((unsigned int)time(NULL));
-	while(set > 1){
-		// If last and first Cell joint, break loop
+	while(set_size > 1){
+		// If last and first Cell joint, -> 이미 같은 셋
 		first = find(sets, 0);
 		last = find(sets, sets->size_maze);
 		if(first == last && first != 0 && last != 0) break;
@@ -90,11 +90,15 @@ void createMaze(DisjointSets *sets, DisjointSets *maze_print, int num){
 		// 가로 세로 벽을 쌓는 형식
 
 		// 외벽두개
-		if((randWall+1) % (num*2) == 0) continue;
-		if(randWall >= (maze_print->size_maze - (num*2)) && randWall % 2 == 0) continue;
+		if((randWall+1) % (num*2) == 0)
+			continue;
+		if(randWall >= (maze_print->size_maze - (num*2))
+		   && randWall % 2 == 0)
+			continue;
 
 		// 이미 삭제된 벽이라면
-		if(maze_print->ptr_arr[randWall] == 0) continue;
+		if(maze_print->ptr_arr[randWall] == 0)
+			continue;
 
 		set1 = randCell;
 
@@ -108,11 +112,12 @@ void createMaze(DisjointSets *sets, DisjointSets *maze_print, int num){
 		root2 = find(sets, set2);
 
 		// joint set
-		if(root1 == root2 && root1 != 0 && root2 != 0) continue;
+		if(root1 == root2 && root1 != 0 && root2 != 0)
+			continue;
 
 		// union sets
 		Union(sets, root1, root2);
-		set--;
+		set_size--;
 
 
 		maze_print->ptr_arr[randWall] = 0;
@@ -142,7 +147,8 @@ void printMaze(DisjointSets *sets, int num){
 			else
 				printf(" ");
 		}
-		if(i != sets->size_maze-1 && (i+1) % (num*2) == 0) printf("\n|");
+		if(i != sets->size_maze-1 && (i+1) % (num*2) == 0)
+			printf("\n|");
 	}
 	printf("\n");
 }
